@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from 'react';
+import { Provider } from 'react-redux';
+import store from './data/createStore';
+// import NotificationView from './components/NotificationView';
+
+const NotificationView = lazy(
+  () =>
+    new Promise((resolve) =>
+      setTimeout(() => resolve(import('./components/NotificationView')), 0)
+    ),
+  'NotificationView'
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <NotificationView />
+      </Suspense>
+    </Provider>
   );
 }
 
