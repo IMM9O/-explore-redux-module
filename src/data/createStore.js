@@ -3,7 +3,7 @@
 import { combineReducers, createStore } from 'redux';
 import reducerRegistry from './reducerRegistry';
 
-const initialState = { todos: [{name: 'buy milk', id: 999}] }; /* from local storage or server */
+const initialState = {}; /* from local storage, server or init state */
 
 // Preserve initial state for not-yet-loaded reducers
 const combine = (reducers) => {
@@ -19,7 +19,6 @@ const combine = (reducers) => {
 const reducer = combine(reducerRegistry.getReducers());
 const store = createStore(
   reducer,
-  initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

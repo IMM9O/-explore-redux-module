@@ -1,29 +1,29 @@
-const initialState = [];
-let notificationId = 0;
+const initialState = [{name: 'buy milk', id: 999}];
+let todoId = 0;
 
 const createActionName = name => `app/todos/${name}`;
 
 // selectors
-export const selectAllNotifications = state => state.notifications;
-export const selectNextNotification = state => state.notifications[0];
+export const selectAllTodos = state => state.todos;
 
 // actions
-export const ADD_NOTIFICATION = createActionName('ADD_NOTIFICATION');
-export const REMOVE_NOTIFICATION = createActionName('REMOVE_NOTIFICATION');
+export const ADD_TODO = createActionName('ADD_TODO');
+export const REMOVE_TODO = createActionName('REMOVE_TODO');
 
 // action creators
-export const addNotification = payload => ({ payload, type: ADD_NOTIFICATION });
-export const removeNotification = () => ({ type: REMOVE_NOTIFICATION });
+export const addTodo = payload => ({ payload, type: ADD_TODO });
+export const removeTodo = payload => ({ payload, type: REMOVE_TODO });
 
 
 // reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case ADD_NOTIFICATION:
-      return [...state, { message: action.payload, id: notificationId += 1 }];
-    case REMOVE_NOTIFICATION:
-      return state.slice(1);
+    case ADD_TODO:
+      return [...state, { name: action.payload, id: todoId += 1 }];
+    case REMOVE_TODO:
+      return state.filter((todo) => todo.id !== action.payload);
     default:
       return state;
   }
 }
+
